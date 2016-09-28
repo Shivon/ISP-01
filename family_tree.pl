@@ -1,6 +1,6 @@
-% Boer = Riese = m
-% Bestla = Riesin = w
-% Grid = Riesin = w
+% Boer = giant = m
+% Bestla = giantess = f
+% Grid = giantess = f
 
 male(boer).
 male(odin).
