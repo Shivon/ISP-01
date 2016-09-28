@@ -66,23 +66,32 @@ parent(thor, modi).
 parent(sif, magni).
 parent(sif, modi).
 
-
 % father/2
 % father(X, Y), X is father of Y
-father(X, Y) :- parent(X, Y), male(X), !.
+father(X, Y) :- parent(X, Y), male(X).
 
 % mother/2
 % mother(X, Y), X is mother of Y
-mother(X, Y) :- parent(X, Y), female(X), !.
+mother(X, Y) :- parent(X, Y), female(X).
+
+% sibling/2
+sibling(X, Y) :- mother(M, X), mother(M, Y), father(F, X), father(F, Y), X \= Y.
 
 % brother/2
 % brother(X, Y), X is brother of Y
-brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F, X), father(F, Y), X \= Y.
+brother(X, Y) :- male(X), sibling(X, Y).
 
 % sister/2
 % sister(X, Y), X is sister of Y
-sister(X, Y) :- female(X), mother(M, X), mother(M, Y), father(F, X), father(F, Y), X \= Y.
+sister(X, Y) :- female(X), sibling(X, Y).
 
 % half_brother/2
+% half_brother(X, Y), X is half_brother of Y
+half_brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2, X \= Y;
+                      male(X), father(F, X), father(F, Y), mother(M1, X), mother(M2, Y), M1 \= M2, X \= Y.
+
 % nephew/2
+% nephew(X, Y), X is nephew of Y
+nephew(X, Y) :- male(X), parent(P, X), sibling(Y, P).
+
 % granduncle/2
