@@ -92,11 +92,11 @@ half_brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F1, X), father
 
 % nephew/2
 % nephew(X, Y), X is nephew of Y
-nephew(X, Y) :- male(X), parent(P, X), sibling(Y, P).
+nephew(X, Y) :- male(X), parent(P, X), sibling(P, Y).
 
 % niece/2
 % niece(X, Y), X is niece of Y
-niece(X, Y) :- female(X), parent(P, X), sibling(Y, P).
+niece(X, Y) :- female(X), parent(P, X), sibling(P, Y).
 
 % granduncle/2
 % granduncle(X, Y), X is granduncle of Y
