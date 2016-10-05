@@ -101,3 +101,9 @@ niece(X, Y) :- female(X), parent(P, X), sibling(P, Y).
 % granduncle/2
 % granduncle(X, Y), X is granduncle of Y
 granduncle(X, Y) :- male(X), parent(P, Y), (nephew(P, X) ; niece(P, X)).
+
+% childless/1
+% the request cannot be bundled within "not(parent(X, _Y))", when you want to request all childless family members, too
+% reason: with childless(X), parent(X, _Y) would give back tupel of two names and Prolog needs to handle them separately to go on
+childless(X) :- male(X), not(father(X, _Y));
+                female(X), not(mother(X, _Y)).
