@@ -26,7 +26,7 @@ female(sif).
 female(idun).
 
 % spouse/2
-% spouse(X,Y), male X is married to female Y
+% spouse(X,Y), X is married to Y
 spouse(boer, bestla).
 spouse(odin, frigg).
 spouse(odin, joerd).
@@ -34,6 +34,14 @@ spouse(odin, grid).
 spouse(thor, sif).
 spouse(balder, nanna).
 spouse(bragi, idun).
+
+spouse(bestla, boer).
+spouse(frigg, odin).
+spouse(joerd, odin).
+spouse(grid, odin).
+spouse(sif, thor).
+spouse(nanna, balder).
+spouse(idun, bragi).
 
 % parent/2
 % parent(X, Y), X is parent of Y
@@ -87,8 +95,11 @@ sister(X, Y) :- female(X), sibling(X, Y).
 
 % half_brother/2
 % half_brother(X, Y), X is half_brother of Y
-half_brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2, X \= Y;
-                      male(X), father(F, X), father(F, Y), mother(M1, X), mother(M2, Y), M1 \= M2, X \= Y.
+%half_brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2, X \= Y;
+%                      male(X), father(F, X), father(F, Y), mother(M1, X), mother(M2, Y), M1 \= M2, X \= Y.
+half_brother(X, Y) :- (male(X), X \= Y), ((mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2) ;
+                                          (father(F, X), father(F, Y), mother(M1, X), mother(M2 Y), M1 \= M2)).
+
 
 % nephew/2
 % nephew(X, Y), X is nephew of Y
@@ -101,3 +112,12 @@ niece(X, Y) :- female(X), parent(P, X), sibling(P, Y).
 % granduncle/2
 % granduncle(X, Y), X is granduncle of Y
 granduncle(X, Y) :- male(X), parent(P, Y), (nephew(P, X) ; niece(P, X)).
+
+% uncle/2
+% uncle(X, Y), X is uncle of Y
+uncle(X, Y) :- male(X), parent(P, Y), sibling(P, X).
+
+
+% not_married/2
+% not_married(X, Y), X is not married to Y
+not_married(X, Y) :- (male(X), female(Y); female(X), male(Y)), \+ spouse(X,Y).
