@@ -95,11 +95,8 @@ sister(X, Y) :- female(X), sibling(X, Y).
 
 % half_brother/2
 % half_brother(X, Y), X is half_brother of Y
-% half_brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2, X \= Y;
-%                      male(X), father(F, X), father(F, Y), mother(M1, X), mother(M2, Y), M1 \= M2, X \= Y.
-half_brother(X, Y) :- (male(X), X \= Y), ((mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2) ;
-                                          (father(F, X), father(F, Y), mother(M1, X), mother(M2 Y), M1 \= M2)).
-
+half_brother(X, Y) :- male(X), mother(M, X), mother(M, Y), father(F1, X), father(F2, Y), F1 \= F2, X \= Y;
+                      male(X), father(F, X), father(F, Y), mother(M1, X), mother(M2, Y), M1 \= M2, X \= Y.
 
 % nephew/2
 % nephew(X, Y), X is nephew of Y
